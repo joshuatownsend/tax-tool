@@ -1,0 +1,24 @@
+AVGO FMV (11/22/2023):             $979.50
+VMW per share cash value:          $68.258355
+VMW per share AVGO ratio:          0.131290
+VMW per share value after merge:   $196.857388
+VMW shares to cash percent:        0.479006
+VMW shares to stock percent:       0.520994
+
+Special dividend 2018: date=12/28/2018, reduce cost basis by 26.76
+Special dividend 2021: date=11/01/2021, reduce cost basis by 16.58
+
+total vmw share:                   0.000
+total avgo share:                  0.000
+total proceeds:                    $0.00
+
+total short term proceeds:         $0.00
+total short term cost basis:       $0.00
+total short term capital gain:     $0.00
+
+total long term proceeds:          $0.00
+total long term cost basis:        $0.00
+total long term capital gain:      $0.00
+
+total avgo cash-in-lieu frac share cost basis:    $0.00
+total avgo cash-in-lieu frac share capital gain:  $0.00

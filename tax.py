@@ -51,17 +51,15 @@ def calc_tax(input_file_path, output_file, csv_file):
     # read in gain&loss csv file
     with open(input_file_path, 'r', encoding='utf-8-sig') as file:
         csv_reader = csv.DictReader(file)
-        gain_loss_data = [row for row in csv_reader]
-
-    # process each row in csv file
+        gain_loss_data = [row for row in csv_reader]    # process each row in csv file
     for row in gain_loss_data:
         idx += 1
-
+        
         if row["Record Type"] != "Sell":
             continue
-
+        
         if row["Symbol"] == "VMW":
-            lot = {"row_id": idx, "share": float(row["Qty."]), "acquire_date": sanitize_date_str(row["Date Acquired"])}
+            lot = {"row_id": idx, "share": float(row["Quantity"]), "acquire_date": sanitize_date_str(row["Date Acquired"])}
 
             acquired_date = datetime.strptime(lot["acquire_date"], "%m/%d/%Y")
             if acquired_date < ipo_date:
@@ -91,9 +89,7 @@ def calc_tax(input_file_path, output_file, csv_file):
                 print("Unsupported lot, type=%s, row id=%d" % (lot["type"], lot["row_id"]))
                 continue
 
-            lot["sold_date"] = sanitize_date_str(row["Date Sold"])
-
-            # so we know which lot is sold before merge
+            lot["sold_date"] = sanitize_date_str(row["Date Sold"])            # so we know which lot is sold before merge
             tax_lot.set_lot_merge_status(lot)
             lot["total_proceeds"] = float(row["Total Proceeds"].strip("$").strip().replace(",", ""))
 
@@ -101,20 +97,20 @@ def calc_tax(input_file_path, output_file, csv_file):
             lots.append(lot)
         elif row["Symbol"] == "AVGO":
             sold_date_str = sanitize_date_str(row["Date Sold"])
-
+            
             # only look for avgo fractional sell lot, skip avgo lot sold after merge
             if sold_date_str == tax_lot.MERGE_DATE:
                 # get avgo fractional share info
                 avgo_acquire_date = sanitize_date_str(row["Date Acquired"])
-                avgo_fractional_share = float(row["Qty."])
+                avgo_fractional_share = float(row["Quantity"])
                 avgo_fractional_share_proceeds = float(row["Total Proceeds"].strip("$").strip().replace(",", ""))
-
+                
                 fractional_input = {"avgo_acquire_date": avgo_acquire_date,
                                     "avgo_fractional_share": avgo_fractional_share,
                                     "avgo_fractional_share_proceeds": avgo_fractional_share_proceeds}
                 fractional_inputs.append(fractional_input)
             else:
-                print("Sold AVGO after merge date, row id=%d, share=%.3f" % (idx, float(row["Qty."])))
+                print("Sold AVGO after merge date, row id=%d, share=%.3f" % (idx, float(row["Quantity"])))
 
     # find the lot used for avgo fractional share cost base, calc avgo fractional share cost base
     for fractional_input in fractional_inputs:
